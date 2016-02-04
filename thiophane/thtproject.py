@@ -78,6 +78,7 @@ HIERA_CONFIG = '''
 :hierarchy:
   - "%{{::fqdn}}"
   - config
+  - context
 '''
 
 # Configuration files for Puppet
@@ -102,7 +103,16 @@ PUPPET_CONFIGURATION_VALUES = {
 
 # List of root directories where manifest fragments will be searched in.
 PUPPET_MANIFEST_TEMPLATE_DIRS = [
-    os.path.join(PROJECT_DIR, 'manifests'),
+    os.path.normpath(
+        os.path.join(
+            PROJECT_DIR,
+            '..',
+            'tripleo-heat-templates',
+            'puppet',
+            'manifests'
+        )
+    ),
+    '/usr/share/openstack-tripleo-heat-templates/puppet/manifests',
 ]
 
 # List of paths where project plugins are located
